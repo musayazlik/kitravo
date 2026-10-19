@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      BETTER_AUTH_SECRET: ci-only-isolated-build-secret-not-for-production
+      AUTH_DATABASE_PATH: ':memory:'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm build

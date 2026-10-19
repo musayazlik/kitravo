@@ -1,26 +1,416 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Ink & Proof — the Kitravo palette.
+ * Paper is the desk the panel sits on, Sheet the page you work on,
+ * Ink the brand colour, Proof marks what waits for a decision,
+ * Signal marks what is live and healthy.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --radius: 0.25rem;
+
+  --paper: #f3f4f7;
+  --sheet: #ffffff;
+  --graphite: #161821;
+  --ink: #1147db;
+  --proof: #e39a2d;
+  --signal: #12876c;
+  --rust: #c8432f;
+
+  --background: var(--sheet);
+  --foreground: var(--graphite);
+  --card: var(--sheet);
+  --card-foreground: var(--graphite);
+  --popover: var(--sheet);
+  --popover-foreground: var(--graphite);
+  --primary: var(--ink);
+  --primary-foreground: #ffffff;
+  --secondary: #eceef3;
+  --secondary-foreground: var(--graphite);
+  --muted: #f1f2f6;
+  --muted-foreground: #5d6273;
+  --accent: #edf2ff;
+  --accent-foreground: #15378e;
+  --destructive: var(--rust);
+  --border: #e3e5eb;
+  --input: #d9dce4;
+  --ring: var(--ink);
+
+  --proof-soft: #fdf3e2;
+  --proof-foreground: #8a5300;
+  --signal-soft: #e3f4ef;
+  --signal-foreground: #0b5e4b;
+  --ink-soft: #eaf0ff;
+
+  /* Fixed light product preview inside the marketing landscape, in either theme. */
+  --preview-sheet: #ffffff;
+  --preview-paper: #f7f8fb;
+  --preview-text: #202232;
+  --preview-muted: #656b7e;
+  --preview-border: #e7e9f0;
+  --preview-ink: #1147db;
+  --preview-ink-soft: #eaf0ff;
+  --preview-signal: #0b765e;
+  --preview-proof: #e39a2d;
+  --landing-shadow: #142b6655;
+  --landing-night: #12234a;
+  --landing-terminal-foreground: #eceef4;
+  --landing-open-background: var(--ink);
+  --landing-open-foreground: var(--primary-foreground);
+
+  /* Cover artwork keeps its printed colours when the surrounding UI changes theme. */
+  --landing-art-paper: #fdf3e2;
+  --landing-art-ink: #1147db;
+  --landing-art-ink-soft: #eaf0ff;
+  --landing-art-proof: #e39a2d;
+  --landing-art-signal: #12876c;
+  --landing-art-signal-soft: #e3f4ef;
+  --landing-art-text: #202232;
+
+  --chart-1: var(--ink);
+  --chart-2: var(--signal);
+  --chart-3: var(--proof);
+  --chart-4: #9a4fb8;
+  --chart-5: #7b8195;
+
+  --sidebar: var(--paper);
+  --sidebar-foreground: #2a2d3a;
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e6e8ef;
+  --sidebar-accent-foreground: var(--graphite);
+  --sidebar-border: #e0e2e9;
+  --sidebar-ring: var(--ink);
+}
+
+.dark {
+  --paper: #0d0f15;
+  --sheet: #151821;
+  --graphite: #eceef4;
+  --ink: #86a7ff;
+  --proof: #f2b65a;
+  --signal: #3cc39c;
+  --rust: #f0705c;
+
+  --primary-foreground: #0d0f15;
+  --secondary: #1f2330;
+  --secondary-foreground: var(--graphite);
+  --muted: #1c1f2b;
+  --muted-foreground: #9aa0b4;
+  --accent: #1c2b4a;
+  --accent-foreground: #d6e2ff;
+  --border: #262a37;
+  --input: #2e3342;
+
+  --proof-soft: #3a2c14;
+  --proof-foreground: #f6c87f;
+  --signal-soft: #11332b;
+  --signal-foreground: #7fe0c2;
+  --ink-soft: #192b4c;
+
+  --chart-4: #c287de;
+  --chart-5: #8a90a6;
+
+  --sidebar-foreground: #c9ccd8;
+  --sidebar-primary-foreground: #0d0f15;
+  --sidebar-accent: #1b1e29;
+  --sidebar-border: #1e2230;
+}
+
+/* Interactive landing previews follow the theme without changing legacy light previews. */
+.dark .studio-page {
+  --preview-sheet: #1b202c;
+  --preview-paper: #141924;
+  --preview-text: var(--foreground);
+  --preview-muted: #a9b2c8;
+  --preview-border: #354055;
+  --preview-ink: var(--ink);
+  --preview-ink-soft: var(--ink-soft);
+  --preview-signal: var(--signal);
+  --preview-proof: var(--proof);
+  --landing-shadow: #00000099;
+  --landing-open-background: var(--ink-soft);
+  --landing-open-foreground: var(--foreground);
 }
 
 @theme inline {
+  --font-sans: var(--app-font-sans);
+  --font-heading: var(--app-font-heading);
+  --font-mono: var(--font-jetbrains);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-proof: var(--proof);
+  --color-proof-soft: var(--proof-soft);
+  --color-proof-foreground: var(--proof-foreground);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
+  --color-signal-foreground: var(--signal-foreground);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+ * Type per language. The Latin faces carry English, Turkish and German;
+ * Chinese falls through to the system CJK faces; Arabic leads with Noto Sans
+ * Arabic and keeps the Latin faces for embedded Latin text and numbers.
+ */
+:root {
+  --app-font-sans: var(--font-instrument), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --app-font-heading: var(--font-bricolage), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+}
+
+:root:lang(ar) {
+  --app-font-sans: var(--font-arabic), var(--font-instrument), sans-serif;
+  --app-font-heading: var(--font-arabic), var(--font-bricolage), sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  /* Letter spacing breaks the joins between Arabic letters. */
+  :lang(ar) * {
+    letter-spacing: normal !important;
+  }
+  /* Icons that point "forward" or "back" mirror in right-to-left languages. */
+  [dir="rtl"]
+    :is(
+      .lucide-chevron-right,
+      .lucide-chevron-left,
+      .lucide-chevrons-right,
+      .lucide-chevrons-left,
+      .lucide-arrow-right,
+      .lucide-arrow-left,
+      .lucide-arrow-up-right,
+      .lucide-corner-down-left,
+      .lucide-corner-down-right,
+      .lucide-log-out,
+      .lucide-reply,
+      .lucide-message-square-reply,
+      .lucide-undo-2,
+      .lucide-panel-left,
+      .lucide-send
+    ) {
+    transform: scaleX(-1);
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-heading tracking-tight text-balance;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  ::selection {
+    background: color-mix(in oklch, var(--ink) 22%, transparent);
   }
 }
 
-body {
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Marketing effects respond to a pointer, focus or a click; no ambient loops. */
+.landing-hero-glow {
+  background: radial-gradient(ellipse at 50% 0%, color-mix(in oklch, var(--ink) 7%, transparent), transparent 68%);
+}
+
+.landing-eyebrow {
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+}
+
+.landing-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--ink);
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+.landing-button {
+  transition: transform 200ms var(--ease-out-quint), background-color 200ms, box-shadow 200ms;
+}
+
+.landing-button:hover { transform: translateY(-2px); }
+.landing-button:active { transform: translateY(0); }
+.landing-page section[id] { scroll-margin-top: 6rem; }
+
+@media (max-width: 499px) {
+  .landing-modular-card { min-height: 530px; }
+  .landing-modular-card > img { inset-inline-end: -10px; bottom: -30px; width: 270px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-page *, .landing-page *::before, .landing-page *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .landing-button:hover { transform: none; }
+}
+
+/* Tiptap editor surface and published articles share one typography. */
+@layer components {
+  .prose-editor {
+    @apply min-h-[520px] text-[15px] leading-7 text-foreground outline-none;
+  }
+  :is(.prose-editor, .prose-article) > * + * {
+    @apply mt-4;
+  }
+  :is(.prose-editor, .prose-article) h2 {
+    @apply mt-8 text-2xl font-semibold;
+  }
+  :is(.prose-editor, .prose-article) h3 {
+    @apply mt-6 text-xl font-semibold;
+  }
+  :is(.prose-editor, .prose-article) h4 {
+    @apply mt-5 font-heading text-lg font-semibold;
+  }
+  :is(.prose-editor, .prose-article) ul {
+    @apply list-disc ps-6;
+  }
+  :is(.prose-editor, .prose-article) ol {
+    @apply list-decimal ps-6;
+  }
+  :is(.prose-editor, .prose-article) ul[data-type="taskList"] {
+    @apply list-none ps-1;
+  }
+  :is(.prose-editor, .prose-article) ul[data-type="taskList"] li {
+    @apply flex items-start gap-2;
+  }
+  :is(.prose-editor, .prose-article) ul[data-type="taskList"] li > label {
+    @apply mt-1.5 flex shrink-0;
+  }
+  :is(.prose-editor, .prose-article) ul[data-type="taskList"] input[type="checkbox"] {
+    @apply size-4 accent-[var(--ink)];
+  }
+  :is(.prose-editor, .prose-article) ul[data-type="taskList"] li > div {
+    @apply flex-1;
+  }
+  :is(.prose-editor, .prose-article) blockquote {
+    @apply border-s-2 border-ink ps-4 text-muted-foreground italic;
+  }
+  :is(.prose-editor, .prose-article) code {
+    @apply rounded-sm bg-muted px-1.5 py-0.5 font-mono text-[13px];
+  }
+  :is(.prose-editor, .prose-article) pre {
+    @apply overflow-x-auto rounded-sm bg-[#161821] p-4 font-mono text-[13px] leading-6 text-[#e3e5f0];
+  }
+  :is(.prose-editor, .prose-article) pre code {
+    @apply bg-transparent p-0 text-inherit;
+  }
+  :is(.prose-editor, .prose-article) hr {
+    @apply my-6 border-border;
+  }
+  :is(.prose-editor, .prose-article) mark {
+    @apply rounded-sm px-0.5 text-inherit;
+  }
+  :is(.prose-editor, .prose-article) a {
+    @apply text-ink underline underline-offset-4;
+  }
+  :is(.prose-editor, .prose-article) img {
+    @apply h-auto max-w-full rounded-sm;
+  }
+  :is(.prose-editor, .prose-article) [data-resize-container] {
+    @apply max-w-full;
+  }
+  :is(.prose-editor, .prose-article) .ProseMirror-selectednode img,
+  :is(.prose-editor, .prose-article) img.ProseMirror-selectednode {
+    @apply outline-2 outline-offset-2 outline-ink;
+  }
+  :is(.prose-editor, .prose-article) div[data-youtube-video] iframe {
+    @apply aspect-video h-auto w-full rounded-sm;
+  }
+  :is(.prose-editor, .prose-article) table {
+    @apply w-full table-fixed border-collapse overflow-hidden text-sm;
+  }
+  :is(.prose-editor, .prose-article) th,
+  :is(.prose-editor, .prose-article) td {
+    @apply relative border px-3 py-2 align-top;
+  }
+  :is(.prose-editor, .prose-article) th {
+    @apply bg-muted text-start font-semibold;
+  }
+  :is(.prose-editor, .prose-article) .selectedCell::after {
+    @apply pointer-events-none absolute inset-0 bg-ink/10;
+    content: "";
+  }
+  :is(.prose-editor, .prose-article) .column-resize-handle {
+    @apply pointer-events-none absolute top-0 -end-0.5 bottom-0 w-1 bg-ink;
+  }
+  /* Published articles read a size up from the editor. */
+  .prose-article {
+    @apply text-[17px] leading-8 text-foreground;
+  }
+  .prose-article > * + * {
+    @apply mt-6;
+  }
+  .prose-article h2 {
+    @apply mt-12 text-3xl;
+  }
+  .prose-editor p.is-editor-empty:first-child::before {
+    @apply pointer-events-none float-start h-0 text-muted-foreground;
+    content: attr(data-placeholder);
+  }
 }

@@ -1,0 +1,9 @@
+.git
+.next
+.data
+output
+node_modules
+.env*
+.agents
+.claude
+skills-lock.json
