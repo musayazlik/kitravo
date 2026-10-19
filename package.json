@@ -10,7 +10,7 @@
     "auth:setup": "node --env-file-if-exists=.env.local --import tsx scripts/auth-setup.mts",
     "test:access": "node --import tsx --test tests/access.test.mts",
     "test:routes": "node --import tsx --test tests/routes.test.mts",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test": "pnpm test:access && pnpm test:routes",
     "check": "pnpm lint && pnpm typecheck && pnpm test",
     "test:postgres": "node --env-file-if-exists=.env.local --import tsx scripts/test-postgres.mts"
